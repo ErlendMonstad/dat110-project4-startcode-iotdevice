@@ -29,27 +29,22 @@ public class RestClient {
 
     public void doPostAccessEntry(String message) {
         try{
-            Gson gson = new Gson();
             String json = new AccessMessage(message).toJson();
             HttpPost httpPost = new HttpPost(host + logpath);
             httpPost.setEntity(new StringEntity(json));
             httpClient.execute(httpPost);
-
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     private static String codepath = "/accessdevice/code";
-
     public AccessCode doGetAccessCode() {
         try{
             HttpGet httpGet = new HttpGet(host + codepath);
             HttpResponse response = httpClient.execute(httpGet);
             AccessCode code = AccessCode.fromJson(EntityUtils.toString(response.getEntity()));
-
             return code;
-
         }catch (Exception e){
             e.printStackTrace();;
         }
